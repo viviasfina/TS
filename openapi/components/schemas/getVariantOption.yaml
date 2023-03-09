@@ -1,0 +1,21 @@
+type: object
+title: getVariant responses
+description: Responses example
+required: 
+  - id
+  - variantId
+  - variantOptionName
+  - priceDifference
+properties:
+  id:
+    type: integer
+    example: 1
+  variantId:
+    type: integer
+    example: 1
+  variantOptionName:
+    type: string
+    example: Hot
+  priceDifference:
+    type: integer
+    example: 5000

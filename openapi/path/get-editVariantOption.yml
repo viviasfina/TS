@@ -1,0 +1,70 @@
+get: 
+  tags: 
+    -  Variant Option
+  summary: Get variant option
+  description: Get variant option details by variantOptionId
+  operationId: getVariantOption
+  parameters: 
+    - name: id
+      in:  path
+      schema: 
+        type: integer
+      required: true
+  responses: 
+    '200':
+      description: Successful operation
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/getVariantOption.yaml
+    '400':
+      description: Id not found
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400-id.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+put: 
+  tags: 
+    -  Variant Option
+  parameters: 
+    - name: id
+      in:  path
+      schema: 
+        type: integer
+      required: true
+  summary: Edit variant option
+  description: Update Variant Option's name
+  requestBody: 
+    content: 
+      application/json:
+        schema:
+          $ref: ../components/schemas/editVariantOption.yaml
+    description: Required entities
+    required: true
+  responses: 
+    '200':
+      description: Successful Operation
+    '400': 
+      description: To be updated VariantOptionId not found!!!
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400-id.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+    
+  
+
+  
+
+  

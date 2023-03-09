@@ -1,0 +1,5 @@
+apis:
+  vivi@1.0.0:
+    root: ./openapi/openapi.yaml
+    theme:
+      openapi: {}

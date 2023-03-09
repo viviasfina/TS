@@ -1,0 +1,12 @@
+type: object
+title: Check editProduct request
+required:
+  - productName
+  - categoryName
+properties:
+  productName:
+    type: string
+    example: Choco-Hazelnut
+  categoryName:
+    type: string
+    example: Choco Series

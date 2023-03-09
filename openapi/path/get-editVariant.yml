@@ -1,0 +1,68 @@
+get: 
+  tags: 
+    -  Variant
+  summary: Get variant
+  description: Get variant details by variantId
+  operationId: getVariant
+  parameters: 
+    - name: id
+      in:  path
+      schema: 
+        type: integer
+      required: true
+  responses: 
+    '200':
+      description: Successful operation
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/getVariant.yaml
+    '400':
+      description: Bad request
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400-id.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+put: 
+  tags: 
+    -  Variant
+  parameters: 
+    - name: id
+      in:  path
+      schema: 
+        type: integer
+      required: true
+  summary: Edit variant
+  description: Update Variant's name
+  requestBody: 
+    content: 
+      application/json:
+        schema:
+          $ref: ../components/schemas/editVariant.yaml
+    description: Required entities
+    required: true
+  responses: 
+    '200':
+      description: Successful Operation
+    '400': 
+      description: Bad request
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400-id.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+    
+  
+
+  

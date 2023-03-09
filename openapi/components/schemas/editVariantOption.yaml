@@ -1,0 +1,8 @@
+type: object
+title: Check editVariantOption request
+required:
+  - variantOptionName
+properties:
+  variantName:
+    type: string
+    example: Separated ice

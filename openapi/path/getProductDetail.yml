@@ -1,0 +1,33 @@
+get: 
+  tags: 
+    -  Product
+  summary: Get product detail
+  description: Get product detail by id
+  operationId: getProductDetail
+  parameters: 
+    - name: id
+      in:  path
+      schema: 
+        type: integer
+      required: true
+  responses: 
+    '200':
+      description: Successful operation
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/getProductDetail.yaml
+    '400':
+      description: Bad request
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400-id.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+  
+  

@@ -1,0 +1,71 @@
+get: 
+  tags: 
+    -  Product
+  summary: Get product
+  description: Get product by Id
+  operationId: getProduct
+  parameters: 
+    - name: id
+      in:  path
+      schema: 
+        type: integer
+      required: true
+  responses: 
+    '200':
+      description: Successful operation
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/getProduct.yaml
+    '400':
+      description: Bad request
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400-id.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application.json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+put: 
+  tags: 
+    -  Product
+  summary: Edit product
+  parameters: 
+    - name: id
+      in:  path
+      schema: 
+        type: integer
+      required: true
+  description: Update product's productName and categoryName
+  operationId: editProduct
+  responses:
+    '200':
+      description: Successful Operation
+    '400': 
+      description: Bad request
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400-id.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application.json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/editProduct.yaml
+    description: Required entities
+    required: true
+  
+  
+
+      
+ 
+  

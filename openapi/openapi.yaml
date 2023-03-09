@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Test Redocly 
+  version: 1.0.11
+tags:
+  - name: Product
+    description: Product documentation
+  - name: Variant
+    description: Variant documentation
+  - name: Variant Option
+    description: Variant Options documentation
+  - name: Order
+    description: Order Documentation
+paths:
+  /products:
+    $ref: path/addProduct.yml
+  /products/{id}:
+    $ref: path/get-editProduct.yml
+  /variants:
+    $ref: path/addVariants.yml
+  /variants/{id}:
+    $ref: path/get-editVariant.yml
+  /variant-option:
+    $ref: path/addVariantOption.yml
+  /variant-option/{id}:
+    $ref: path/get-editVariantOption.yml
+  /products/{id}/detail:
+    $ref: path/getProductDetail.yml
+  /orders:
+    $ref: path/addOrder.yml
+  
+

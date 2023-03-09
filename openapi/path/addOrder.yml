@@ -1,0 +1,28 @@
+post:
+  tags:
+    - Order
+  summary: Add new order
+  description: add new order and order details
+  operationId: addOrder
+  responses:
+    '201':
+      description: Created
+    '400': 
+      description: Bad request
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400-validate.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/addOrder.yaml
+    description: Required entities
+    required: true

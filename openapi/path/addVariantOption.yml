@@ -1,0 +1,28 @@
+post:
+  tags:
+    - Variant Option
+  summary: Add new variant option
+  description: add new variant option by variantId, variantOptionName, priceDifference
+  operationId: addVariantOption
+  responses:
+    '201':
+      description: Created
+    '400': 
+      description: Bad request
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/addVariantOption.yaml
+    description: Required entities
+    required: true

@@ -1,0 +1,16 @@
+type: object
+title: Check addProduct request
+required: 
+  - productName
+  - price
+  - categoryName
+properties:
+  productName:
+    type: string
+    example: "Latte"
+  price:
+    type: integer
+    example: 16000
+  categoryName:
+    type: string
+    example: Essentials

@@ -1,0 +1,28 @@
+post:
+  tags:
+    - Product
+  summary: Add new product
+  description: add new product by productName, price, and categoryName
+  operationId: addProduct
+  responses:
+    '201':
+      description: Created
+    '400': 
+      description: Bad request
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/addProduct.yaml
+    description: Required entities
+    required: true

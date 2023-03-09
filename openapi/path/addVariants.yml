@@ -1,0 +1,28 @@
+post:
+  tags:
+    - Variant
+  summary: Add new variant
+  description: add new variant by productId, variantName
+  operationId: addVariant
+  responses:
+    '201':
+      description: Created
+    '400': 
+      description: Bad request
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/400.yaml
+    '500':
+      description: Internal server error
+      content: 
+        application/json:
+          schema: 
+            $ref: ../components/schemas/500.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/addVariant.yaml
+    description: Required entities
+    required: true

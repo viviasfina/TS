@@ -1,0 +1,17 @@
+type: object
+title: getVariant responses
+description: Responses example
+required: 
+  - id
+  - productId
+  - variantName
+properties:
+  id:
+    type: integer
+    example: 1
+  productId:
+    type: integer
+    example: 1
+  variantName:
+    type: string
+    example: Available-in

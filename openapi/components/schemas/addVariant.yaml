@@ -1,0 +1,12 @@
+type: object
+title: Check addVariant request
+required:
+  - productId
+  - variantName
+properties:
+  productId:
+    type: integer
+    example: 1
+  variantName:
+    type: string
+    example: Available-in

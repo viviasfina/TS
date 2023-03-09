@@ -1,0 +1,8 @@
+type: object
+title: Check editVariant request
+required:
+  - variantName
+properties:
+  variantName:
+    type: string
+    example: Choco Series

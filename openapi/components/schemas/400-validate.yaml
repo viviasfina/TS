@@ -1,0 +1,9 @@
+type: object
+title: 400 Bad request
+properties:
+  statusCode:
+    type: integer
+    example: 400
+  message:
+    type: string
+    example: Fail to validate

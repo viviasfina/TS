@@ -1,0 +1,25 @@
+type: object
+title: getProduct responses
+description: Responses example
+required: 
+  - id
+  - productName
+  - price
+  - position
+  - categoryName
+properties:
+  id:
+    type: integer
+    example: 1
+  productName:
+    type: string
+    example: "Latte"
+  price:
+    type: number
+    example: 16000
+  position:
+    type: number
+    example: 0
+  categoryName:
+    type: string
+    example: Essentials

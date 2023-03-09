@@ -1,0 +1,39 @@
+type: object
+title: getProductDetail responses
+description: Responses example
+required: 
+  - productName
+  - price
+  - categoryName
+  - variants
+properties:
+  productName:
+    type: string
+    example: Latte
+  price:
+    type: integer
+    example: 16000
+  categoryName:
+    type: string
+    example: Essentials
+  variants:
+    type: array
+    items: 
+      type: object
+      properties: 
+        name:
+          type: string
+          example: Available-in
+        options:
+          type: array
+          items: 
+            type: object
+            properties: 
+              name:
+                type: string
+                example: Hot
+              priceDifference:
+                type: integer
+                example: 5000
+            
+          
