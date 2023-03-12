@@ -2,7 +2,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable prefer-const */
 /* eslint-disable prettier/prettier */
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  CACHE_MANAGER,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { OptionProductDetailDTO } from '../DTOes/OptionProductDetailDTO.class';
 import { ProductDetailDTO } from '../DTOes/ProductDetailDTO.class';
@@ -17,6 +23,7 @@ import {
   Repository,
 } from 'typeorm';
 import { disconnect } from 'process';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class ProductService {
@@ -88,11 +95,6 @@ export class ProductService {
   async getProductDetail(id: number): Promise<ProductDetailDTO> {
     //this.connection.createQueryRunner();
     console.info('ini connection: ', this.connection);
-    this.productRepository.find({
-      relations: {
-        variants: true,
-      },
-    });
     const query = `SELECT productName, price,categoryName, v.variantName, vo.name as variantOptionName,vo.priceDifference  FROM orders_schema.products p join orders_schema.variants v on p.id =v.productId 
       JOIN orders_schema.variant_options vo on v.id =vo.variantId
       WHERE v.productId =?

@@ -1,5 +1,19 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  CacheInterceptor,
+  CACHE_MANAGER,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Put,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import { Cache } from 'cache-manager';
 import { ProductDetailDTO } from 'src/DTOes/ProductDetailDTO.class';
 import { ProductPutRequestDTO } from 'src/DTOes/ProductPutRequestDTO.class';
 import { ProductRequestDTO } from 'src/DTOes/ProductRequestDTO.class';
@@ -8,7 +22,10 @@ import { ProductService } from './product.service';
 
 @Controller()
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly productService: ProductService,
+  ) {}
 
   //1
   @Post('products')
@@ -25,9 +42,16 @@ export class ProductController {
   }
 
   //7
+  @UseInterceptors(CacheInterceptor)
   @Get('/products/:id/detail')
   async getProductDetail(@Param('id') id: number): Promise<ProductDetailDTO> {
-    return await this.productService.getProductDetail(id);
+    let detail = await this.cacheManager.get<ProductDetailDTO>(id.toString());
+    console.info('ini hasil cache: ', detail);
+    if (!detail) {
+      detail = await this.productService.getProductDetail(id);
+      await this.cacheManager.set(id.toString(), detail, 60);
+    }
+    return detail;
   }
 
   //8

@@ -1,12 +1,15 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, CACHE_MANAGER, Controller, Inject, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { InvoiceNumber } from './invoiceNumber.class';
 import { ProductP } from './ProductP.class';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly appService: AppService,
+  ) {}
 
   @Post('product')
   addProduct(@Body() product: ProductP): InvoiceNumber {

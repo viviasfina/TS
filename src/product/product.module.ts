@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { Order } from "src/entities/order.entity";
-import { OrderItem } from "src/entities/orderItem.entity";
-import { Product } from "src/entities/product.entity";
-import { Variant } from "src/entities/variant.entity";
-import { VariantOption } from "src/entities/variantOption.entity";
-import { ProductController } from "./product.controller";
-import { ProductService } from "./product.service";
+import { CacheModule, Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Order } from 'src/entities/order.entity';
+import { OrderItem } from 'src/entities/orderItem.entity';
+import { Product } from 'src/entities/product.entity';
+import { Variant } from 'src/entities/variant.entity';
+import { VariantOption } from 'src/entities/variantOption.entity';
+import { ProductController } from './product.controller';
+import { ProductService } from './product.service';
 
 @Module({
   imports: [
@@ -16,16 +16,11 @@ import { ProductService } from "./product.service";
       Variant,
       VariantOption,
       Order,
-      OrderItem
+      OrderItem,
     ]),
   ],
   controllers: [ProductController],
-  providers: [
-    ProductService,
-  ],
-  exports: [
-      ProductService,
-  ],
+  providers: [ProductService],
+  exports: [ProductService],
 })
 export class ProductModule {}
-  
