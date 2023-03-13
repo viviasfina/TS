@@ -10,3 +10,9 @@ export const variantRepoMock = new TypeOrmMockRepository<Variant>();
 export const orderRepoMock = new TypeOrmMockRepository<Order>();
 export const variantOptionRepoMock = new TypeOrmMockRepository<VariantOption>();
 export const orderItemRepoMock = new TypeOrmMockRepository<OrderItem>();
+export const redisRepoMock = {
+  delCache: jest.fn(),
+  setCache: jest.fn(),
+  getCache: jest.fn(),
+  getKeyWildCard: jest.fn(),
+};

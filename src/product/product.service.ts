@@ -16,7 +16,7 @@ import {
   getConnection,
   Repository,
 } from 'typeorm';
-import { RedisRepository } from 'src/repositories/redis.repository';
+import { RedisRepository } from '../repositories/redis.repository';
 import { Console } from 'console';
 
 @Injectable()
@@ -93,7 +93,7 @@ export class ProductService {
     const detail = await this.redisRepo.getCache<ProductDetailDTO>(
       id.toString(),
     );
-    console.log("ini cache detail: ", detail);
+    console.log('ini cache detail: ', detail);
     if (detail) {
       console.info('ini hasil cache redis dalam if :', detail);
       return detail;

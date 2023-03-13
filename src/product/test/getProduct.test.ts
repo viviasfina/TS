@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConnectionMock } from '../../mocks/mock.connection';
-import { productRepoMock } from '../../mocks/repositories.mock';
+import { productRepoMock, redisRepoMock } from '../../mocks/repositories.mock';
 import { Connection } from 'typeorm';
 import {
   fakeExistProductReq,
@@ -11,6 +11,7 @@ import { Product } from '../../entities/product.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { fakeProductResp } from '../fakeData/fakeProductResp';
+import { RedisRepository } from '../../repositories/redis.repository';
 
 describe('ProductService', () => {
   let productService: ProductService;
@@ -26,6 +27,10 @@ describe('ProductService', () => {
         {
           provide: getRepositoryToken(Product),
           useValue: productRepoMock,
+        },
+        {
+          provide: RedisRepository,
+          useValue: redisRepoMock,
         },
       ],
     }).compile();

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConnectionMock } from '../../mocks/mock.connection';
-import { productRepoMock } from '../../mocks/repositories.mock';
+import { productRepoMock, redisRepoMock } from '../../mocks/repositories.mock';
 import { Connection } from 'typeorm';
 import {
   fakeExistProductReq,
@@ -10,9 +10,11 @@ import { ProductService } from '../product.service';
 import { Product } from '../../entities/product.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { RedisRepository } from '../../repositories/redis.repository';
 
 describe('ProductService', () => {
   let productService: ProductService;
+  let redisRepository: RedisRepository;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -26,10 +28,15 @@ describe('ProductService', () => {
           provide: getRepositoryToken(Product),
           useValue: productRepoMock,
         },
+        {
+          provide: RedisRepository,
+          useValue: redisRepoMock,
+        },
       ],
     }).compile();
 
     productService = app.get<ProductService>(ProductService);
+    redisRepository = app.get<RedisRepository>(RedisRepository);
   });
 
   describe('addProduct', () => {
