@@ -37,12 +37,23 @@ describe('ProductService', () => {
   });
 
   describe('getDetailProduct', () => {
-    it('should success ', async () => {
-      const mockedManager = {
-        query: jest.fn(),
-      };
-      mockEntityManager.query.getMockImplementation;
-      expect(await productService.getProductDetail(1)).toBeUndefined();
+    it('should success get from redis', async () => {
+      await redisRepoMock.getCache.mockImplementationOnce(
+        () => fakeProductDetailResp,
+      );
+      expect(await redisRepoMock.getCache.call.length).toEqual(1);
+      expect(await productService.getProductDetail(1)).toEqual(
+        fakeProductDetailResp,
+      );
+    });
+    it('should fail get from redis and success retrieve from db', async () => {
+      // const mockedManager = {
+      //   query: jest.fn(),
+      // };
+      // mockEntityManager.query.getMockImplementation;
+      expect(await productService.getProductDetail(1)).toEqual(
+        fakeProductDetailResp,
+      );
     });
   });
 });
