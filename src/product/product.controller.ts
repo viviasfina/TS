@@ -42,16 +42,10 @@ export class ProductController {
   }
 
   //7
-  @UseInterceptors(CacheInterceptor)
+  //@UseInterceptors(CacheInterceptor)
   @Get('/products/:id/detail')
   async getProductDetail(@Param('id') id: number): Promise<ProductDetailDTO> {
-    let detail = await this.cacheManager.get<ProductDetailDTO>(id.toString());
-    console.info('ini hasil cache: ', detail);
-    if (!detail) {
-      detail = await this.productService.getProductDetail(id);
-      await this.cacheManager.set(id.toString(), detail, 60);
-    }
-    return detail;
+    return await this.productService.getProductDetail(id);
   }
 
   //8

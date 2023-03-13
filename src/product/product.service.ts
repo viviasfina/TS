@@ -2,13 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable prefer-const */
 /* eslint-disable prettier/prettier */
-import {
-  CACHE_MANAGER,
-  HttpException,
-  HttpStatus,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { OptionProductDetailDTO } from '../DTOes/OptionProductDetailDTO.class';
 import { ProductDetailDTO } from '../DTOes/ProductDetailDTO.class';
@@ -22,8 +16,8 @@ import {
   getConnection,
   Repository,
 } from 'typeorm';
-import { disconnect } from 'process';
-import { Cache } from 'cache-manager';
+import { RedisRepository } from 'src/repositories/redis.repository';
+import { Console } from 'console';
 
 @Injectable()
 export class ProductService {
@@ -32,6 +26,7 @@ export class ProductService {
   constructor(
     @InjectConnection() private connection: Connection,
     @InjectRepository(Product) private productRepository: Repository<Product>,
+    private readonly redisRepo: RedisRepository,
   ) {}
 
   //1
@@ -94,14 +89,22 @@ export class ProductService {
   //7
   async getProductDetail(id: number): Promise<ProductDetailDTO> {
     //this.connection.createQueryRunner();
-    console.info('ini connection: ', this.connection);
+    //console.info('ini connection: ', this.connection);
+    const detail = await this.redisRepo.getCache<ProductDetailDTO>(
+      id.toString(),
+    );
+    console.log("ini cache detail: ", detail);
+    if (detail) {
+      console.info('ini hasil cache redis dalam if :', detail);
+      return detail;
+    }
     const query = `SELECT productName, price,categoryName, v.variantName, vo.name as variantOptionName,vo.priceDifference  FROM orders_schema.products p join orders_schema.variants v on p.id =v.productId 
       JOIN orders_schema.variant_options vo on v.id =vo.variantId
       WHERE v.productId =?
       GROUP BY productName, price,categoryName, v.variantName, vo.name ,vo.priceDifference
       ORDER BY variantName ASC`;
     const param = [id];
-    console.info('ini manager:', this.manager);
+    //console.info('ini manager:', this.manager);
     const result = await this.manager.query(query, param);
     const responseProductDetail: ProductDetailDTO = {
       productName: '',
@@ -139,6 +142,7 @@ export class ProductService {
         responseProductDetail.variants[getIndex].options.push(newVariantOption);
       }
     }
+    await this.redisRepo.setCache(id.toString(), responseProductDetail);
     return responseProductDetail;
   }
 }

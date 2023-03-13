@@ -11,8 +11,7 @@ import { VariantModule } from './variant/variant.module';
 import { ProductModule } from './product/product.module';
 import { VariantOptionModule } from './variant-option/variantOption.module';
 import { OrderModule } from './order/order.module';
-import * as redisStore from 'cache-manager-redis-store';
-import { RedisConfig } from './redis.config';
+import { redisModuleFactory } from './redis.module';
 
 @Module({
   imports: [
@@ -31,12 +30,11 @@ import { RedisConfig } from './redis.config';
         migrationsDir: 'src/migration',
       },
     }),
-    //redisModuleFactory(),
+    redisModuleFactory('127.0.0.1', 6379, 60),
     ProductModule,
     VariantModule,
     VariantOptionModule,
     OrderModule,
   ],
 })
-//factory redis
 export class AppModule {}
