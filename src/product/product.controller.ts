@@ -9,11 +9,15 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Cache } from 'cache-manager';
+import { ApiKeyAuthGuard } from 'src/auth/apiKey-auth.guard';
+import { BasicAuthGuard } from 'src/auth/basic-auth.guard';
 import { ProductDetailDTO } from 'src/DTOes/ProductDetailDTO.class';
 import { ProductPutRequestDTO } from 'src/DTOes/ProductPutRequestDTO.class';
 import { ProductRequestDTO } from 'src/DTOes/ProductRequestDTO.class';
@@ -29,6 +33,7 @@ export class ProductController {
 
   //1
   @Post('products')
+  @UseGuards(ApiKeyAuthGuard)
   @UsePipes(new ValidationPipe({ transform: true }))
   async addProduct(@Body() productRequest: ProductRequestDTO): Promise<void> {
     //console.log(productRequest);
@@ -37,6 +42,7 @@ export class ProductController {
 
   //2
   @Get('/products/:id')
+  @UseGuards(BasicAuthGuard)
   async getProduct(@Param('id') id: number): Promise<Product> {
     return await this.productService.getProduct(id);
   }

@@ -1,17 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { CacheModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { VariantModule } from './variant/variant.module';
-// import { ProductService } from './product/product.service';
-// import { OrderItem } from './entities/orderItem.entity';
-// import { Product } from './entities/product.entity';
-// import { Variant } from './entities/variant.entity';
-// import { VariantOption } from './entities/variantOption.entity';
-// import { Order } from './entities/order.entity';
 import { ProductModule } from './product/product.module';
 import { VariantOptionModule } from './variant-option/variantOption.module';
 import { OrderModule } from './order/order.module';
 import { redisModuleFactory } from './redis.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from 'users/user.module';
 
 @Module({
   imports: [
@@ -35,6 +31,8 @@ import { redisModuleFactory } from './redis.module';
     VariantModule,
     VariantOptionModule,
     OrderModule,
+    AuthModule,
+    UserModule,
   ],
 })
 export class AppModule {}
