@@ -1,25 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConnectionMock, mockQueryRunner } from '../../mocks/mock.connection';
 import { productRepoMock, redisRepoMock } from '../../mocks/repositories.mock';
-import { Connection } from 'typeorm';
 import { ProductService } from '../product.service';
 import { Product } from '../../entities/product.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { fakeProductDetailResp } from '../fakeData/fakeProductResp';
-import { mockEntityManager } from '../../mocks/typeOrmRepositories.mock';
 import { RedisRepository } from '../../repositories/redis.repository';
+import { Connection } from 'typeorm';
 
 describe('ProductService', () => {
   let productService: ProductService;
-  let connection: Connection;
+  const mockConnectionValue = {
+    manager: {
+      query: jest.fn(),
+    },
+  };
   beforeEach(async () => {
-    Object.defineProperty(ConnectionMock, 'manager', {});
     const app: TestingModule = await Test.createTestingModule({
       providers: [
         ProductService,
         {
           provide: Connection,
-          useClass: ConnectionMock,
+          useValue: mockConnectionValue,
         },
         {
           provide: getRepositoryToken(Product),
@@ -33,7 +34,6 @@ describe('ProductService', () => {
     }).compile();
 
     productService = app.get<ProductService>(ProductService);
-    connection = app.get<Connection>(Connection);
   });
 
   describe('getDetailProduct', () => {
@@ -47,10 +47,7 @@ describe('ProductService', () => {
       );
     });
     it('should fail get from redis and success retrieve from db', async () => {
-      // const mockedManager = {
-      //   query: jest.fn(),
-      // };
-      // mockEntityManager.query.getMockImplementation;
+      mockConnectionValue.manager.query.mockImplementationOnce(() => []);
       expect(await productService.getProductDetail(1)).toEqual(
         fakeProductDetailResp,
       );
