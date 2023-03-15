@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable prefer-const */
-/* eslint-disable prettier/prettier */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { OptionProductDetailDTO } from '../DTOes/OptionProductDetailDTO.class';
@@ -10,14 +6,8 @@ import { ProductPutRequestDTO } from '../DTOes/ProductPutRequestDTO.class';
 import { ProductRequestDTO } from '../DTOes/ProductRequestDTO.class';
 import { VariantProductDetailDTO } from '../DTOes/VariantProductDetailDTO.class';
 import { Product } from '../entities/product.entity';
-import {
-  Connection,
-  createQueryBuilder,
-  getConnection,
-  Repository,
-} from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { RedisRepository } from '../repositories/redis.repository';
-import { Console } from 'console';
 
 @Injectable()
 export class ProductService {
@@ -88,16 +78,15 @@ export class ProductService {
 
   //7
   async getProductDetail(id: number): Promise<ProductDetailDTO> {
-    //this.connection.createQueryRunner();
-    //console.info('ini connection: ', this.connection);
     const detail = await this.redisRepo.getCache<ProductDetailDTO>(
       id.toString(),
     );
-    console.log('ini cache detail: ', detail);
     if (detail) {
       console.info('ini hasil cache redis dalam if :', detail);
       return detail;
     }
+
+    console.info('Connection', this.connection);
     const query = `SELECT productName, price,categoryName, v.variantName, vo.name as variantOptionName,vo.priceDifference  FROM orders_schema.products p join orders_schema.variants v on p.id =v.productId 
       JOIN orders_schema.variant_options vo on v.id =vo.variantId
       WHERE v.productId =?

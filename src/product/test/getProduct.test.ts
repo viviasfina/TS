@@ -2,10 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConnectionMock } from '../../mocks/mock.connection';
 import { productRepoMock, redisRepoMock } from '../../mocks/repositories.mock';
 import { Connection } from 'typeorm';
-import {
-  fakeExistProductReq,
-  fakeNewProductReq,
-} from '../fakeData/fakeProductReq';
 import { ProductService } from '../product.service';
 import { Product } from '../../entities/product.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
