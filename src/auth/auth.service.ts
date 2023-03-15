@@ -5,7 +5,7 @@ import { UserService } from 'users/user.service';
 export class AuthService {
   constructor(private userService: UserService) {}
   validateApiKey(apiKey: string) {
-    const apiKeys = '1a2b3c';
+    const apiKeys = process.env.API_VALUE;
     return apiKey == apiKeys;
   }
 
@@ -13,8 +13,6 @@ export class AuthService {
     const user = await this.userService.findOne(username);
     if (user && user.password === pass) {
       const { password, ...result } = user;
-      // console.log('ini result ', result);
-      // console.log('ini user ', user);
       return result;
     }
     return null;

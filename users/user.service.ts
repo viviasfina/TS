@@ -8,8 +8,8 @@ export class UserService {
   private readonly users = [
     {
       userId: 1,
-      username: 'username',
-      password: '123',
+      username: process.env.HTTP_USERNAME,
+      password: process.env.HTTP_PASSWORD,
     },
   ];
 

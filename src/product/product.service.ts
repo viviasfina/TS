@@ -8,6 +8,8 @@ import { VariantProductDetailDTO } from '../DTOes/VariantProductDetailDTO.class'
 import { Product } from '../entities/product.entity';
 import { Connection, Repository } from 'typeorm';
 import { RedisRepository } from '../repositories/redis.repository';
+import { ApiResponsesDTO } from 'src/DTOes/ApiResponsesDTO.class';
+import axios from 'axios';
 
 @Injectable()
 export class ProductService {
@@ -133,5 +135,26 @@ export class ProductService {
     }
     await this.redisRepo.setCache(id.toString(), responseProductDetail);
     return responseProductDetail;
+  }
+
+  async getProductAxios(): Promise<ApiResponsesDTO> {
+    console.log('ini link: ', process.env.API_LINK);
+    console.log('ini value: ', process.env.API_LINK_VALUE);
+    const { data } = await axios.post(
+      process.env.API_LINK,
+      {
+        productIds: [
+          '3432ad20-2365-432d-9fc2-cc79b67f2e65',
+          '55165480-3e1a-11ed-9da6-0ad64c6be1ec',
+        ],
+      },
+      {
+        headers: {
+          'x-api-key': process.env.API_LINK_VALUE,
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return data;
   }
 }

@@ -18,6 +18,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Cache } from 'cache-manager';
 import { ApiKeyAuthGuard } from 'src/auth/apiKey-auth.guard';
 import { BasicAuthGuard } from 'src/auth/basic-auth.guard';
+import { ApiResponsesDTO } from 'src/DTOes/ApiResponsesDTO.class';
 import { ProductDetailDTO } from 'src/DTOes/ProductDetailDTO.class';
 import { ProductPutRequestDTO } from 'src/DTOes/ProductPutRequestDTO.class';
 import { ProductRequestDTO } from 'src/DTOes/ProductRequestDTO.class';
@@ -61,5 +62,11 @@ export class ProductController {
     @Param('id') id: number,
   ): Promise<void> {
     await this.productService.editProduct(productPutRequest, id);
+  }
+
+  //axios
+  @Get('/product/axios')
+  async getProductAxios(): Promise<ApiResponsesDTO> {
+    return await this.productService.getProductAxios();
   }
 }
