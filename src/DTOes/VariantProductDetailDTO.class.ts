@@ -1,6 +1,6 @@
-import { OptionProductDetailDTO } from "./OptionProductDetailDTO.class";
+import { OptionProductDetailDTO } from './OptionProductDetailDTO.class';
 
-export class VariantProductDetailDTO{
-    name:string;
-    options:OptionProductDetailDTO[];
+export class VariantProductDetailDTO {
+  name: string;
+  options: OptionProductDetailDTO[];
 }

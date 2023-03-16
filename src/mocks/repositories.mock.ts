@@ -15,4 +15,5 @@ export const redisRepoMock = {
   setCache: jest.fn(),
   getCache: jest.fn(),
   getKeyWildCard: jest.fn(),
+  isAvailable: jest.fn(),
 };

@@ -84,18 +84,15 @@ export class ProductService {
       id.toString(),
     );
     if (detail) {
-      console.info('ini hasil cache redis dalam if :', detail);
       return detail;
     }
 
-    console.info('Connection', this.connection);
-    const query = `SELECT productName, price,categoryName, v.variantName, vo.name as variantOptionName,vo.priceDifference  FROM orders_schema.products p join orders_schema.variants v on p.id =v.productId 
+    const query = `SELECT productName, price,categoryName, v.variantName, vo.name,vo.priceDifference  FROM orders_schema.products p join orders_schema.variants v on p.id =v.productId 
       JOIN orders_schema.variant_options vo on v.id =vo.variantId
       WHERE v.productId =?
       GROUP BY productName, price,categoryName, v.variantName, vo.name ,vo.priceDifference
       ORDER BY variantName ASC`;
     const param = [id];
-    //console.info('ini manager:', this.manager);
     const result = await this.manager.query(query, param);
     const responseProductDetail: ProductDetailDTO = {
       productName: '',
@@ -117,9 +114,9 @@ export class ProductService {
         newVariant.name = item.variantName;
         newVariant.options = [];
         const newVariantOption = new OptionProductDetailDTO();
-        newVariantOption.name = item.variantOptionName;
+        newVariantOption.name = item.name;
         newVariantOption.priceDifference = parseInt(item.priceDifference);
-
+        //console.log(newVariantOption);
         newVariant.options.push(newVariantOption);
         responseProductDetail.variants.push(newVariant);
       } else {
@@ -127,9 +124,9 @@ export class ProductService {
           (variant) => variant.name === item.variantName,
         );
         const newVariantOption = new OptionProductDetailDTO();
-        newVariantOption.name = item.variantOptionName;
+        newVariantOption.name = item.name;
         newVariantOption.priceDifference = parseInt(item.priceDifference);
-
+        //console.log(newVariantOption);
         responseProductDetail.variants[getIndex].options.push(newVariantOption);
       }
     }
@@ -138,8 +135,7 @@ export class ProductService {
   }
 
   async getProductAxios(): Promise<ApiResponsesDTO> {
-    console.log('ini link: ', process.env.API_LINK);
-    console.log('ini value: ', process.env.API_LINK_VALUE);
+    //console.log('ini axios:', axios.post);
     const { data } = await axios.post(
       process.env.API_LINK,
       {
@@ -155,6 +151,7 @@ export class ProductService {
         },
       },
     );
+    //console.log('ini data: ', data);
     return data;
   }
 }

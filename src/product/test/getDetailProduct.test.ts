@@ -6,6 +6,10 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { fakeProductDetailResp } from '../fakeData/fakeProductResp';
 import { RedisRepository } from '../../repositories/redis.repository';
 import { Connection } from 'typeorm';
+import {
+  fakeProductDetailResp2,
+  fakeProductDetailResult,
+} from '../fakeData/fakeProductDetailResp';
 
 describe('ProductService', () => {
   let productService: ProductService;
@@ -38,7 +42,7 @@ describe('ProductService', () => {
 
   describe('getDetailProduct', () => {
     it('should success get from redis', async () => {
-      await redisRepoMock.getCache.mockImplementationOnce(
+      redisRepoMock.getCache.mockImplementationOnce(
         () => fakeProductDetailResp,
       );
       expect(await redisRepoMock.getCache.call.length).toEqual(1);
@@ -47,9 +51,11 @@ describe('ProductService', () => {
       );
     });
     it('should fail get from redis and success retrieve from db', async () => {
-      mockConnectionValue.manager.query.mockImplementationOnce(() => []);
+      mockConnectionValue.manager.query.mockImplementationOnce(
+        () => fakeProductDetailResult,
+      );
       expect(await productService.getProductDetail(1)).toEqual(
-        fakeProductDetailResp,
+        fakeProductDetailResp2,
       );
     });
   });

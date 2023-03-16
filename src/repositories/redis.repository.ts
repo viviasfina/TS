@@ -95,7 +95,6 @@ export class RedisRepository {
 
         client.end(true);
       });
-
       client.on('connect', () => {
         console.info('Connected to redis server');
       });

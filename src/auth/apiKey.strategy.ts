@@ -10,7 +10,6 @@ export class ApiKeyStrategy extends PassportStrategy(
   'api-key',
 ) {
   constructor(private authService: AuthService) {
-    console.log('goes here');
     super({ header: 'api-key', prefix: '' }, true, async (apiKey, done) => {
       if (this.authService.validateApiKey(apiKey)) {
         done(null, true);
